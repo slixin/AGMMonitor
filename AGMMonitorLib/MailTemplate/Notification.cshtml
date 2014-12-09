@@ -1,0 +1,70 @@
+﻿<html>
+<body>    
+    <style type="text/css">
+        .tftable {
+            font-size: 12px;
+            font-family: verdana,geneva,sans-serif;
+            color: #333333;
+            width: 100%;
+            border-width: 1px;
+            border-color: #a9a9a9;
+            border-collapse: collapse;
+        }
+        .tftable th {
+            font-size: 12px;
+            background-color: #b8b8b8;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9a9a9;
+            text-align: left;
+        }
+        .tftable tr {
+            background-color: #ffffff;
+        }
+        .tftable td {
+            font-size: 11px;
+            font-family: verdana,geneva,sans-serif;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9a9a9;
+        }
+    </style>
+    <table class="tftable" border="1">
+        <tbody>
+            <tr>
+                @foreach (var field in Model.Fields)
+                {
+                    <th>@field</th>
+                }
+            </tr>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    @foreach (var itemfield in item.ItemFields)
+                    {
+                    <td>
+                        @if(!string.IsNullOrEmpty(itemfield.Href))
+                        {
+                        <a href="@itemfield.Href">@itemfield.Value</a>
+                        }
+                        else
+                        {
+                        @itemfield.Value
+                        }
+                    </td>
+                    }
+                </tr>
+                @if(!string.IsNullOrEmpty(item.CheckPointsMessage))
+                {
+                    <tr>
+                        <td colspan="@Model.Fields.Count" margin="10">@item.CheckPointsMessage</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <p><u><em><span style="font-size:10px;"><span style="font-family:verdana,geneva,sans-serif;">Power by AGM Monitor Service</span></span></em></u></p>
+</body>
+</html>

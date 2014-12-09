@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AGMMonitorService logtype="0">
+  <MailService server="16.165.216.68" port="25" from="TruClient Agile Manager Monitor&lt;tc_agm_monitor@hp.com&gt;" cc="xin.li21@hp.com" isenabled="true" />
+  <Monitor name="TruClient">
+    <Server url="https://agilemanager-int.saas.hp.com" username="xin.li21@hp.com" password="EAAAAPsiPIIPQP9eGYlSBcqPVQJS2+9oihR0BogUCKEsOuHm" domain="t758142732_hp_com" project="TruClient" timezone="Pacific Standard Time" timezoneoffset="-1" />
+    <Items>
+      <!-- Bug related monitor items -->
+      <Item enabled="false" updated="false" id="D4136631-CF77-4EF9-BCE6-F7141202CE12" type="Defect" description="Daily new defects report" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Detected on Date" operate="LastHours" value="24" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="xin.li21@hp.com,pengw@hp.com" subject="Daily new defects report">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Severity" />
+          <Field name="Regression" />
+          <Field name="Application" isbacklogitem="true" />
+          <Field name="Detected By" />
+          <Field name="Detected on Date" />
+          <Field name="Defect Status" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="7ECD59F0-E95F-4565-871A-69A261972096" type="Defect" description="Problems in new defect for TC team which opened in last 24 hours" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="New or Open" />
+            <Field field="Detected on Date" operate="LastHours" value="24" />
+          </ItemFields>
+          <BackLogFields>
+            <Field field="Application" operate="Equals" value="7 or 17" />
+          </BackLogFields>
+        </Condition>
+        <CheckPoints>
+          <CheckPoint field="Regression" isbacklogitem="false" operate="NotEquals" value="" error="Regression cannot be empty." />
+          <CheckPoint field="Release" isbacklogitem="false" operate="NotEquals" value="" error="Release cannot be  empty." />
+          <CheckPoint field="RC" isbacklogitem="false" operate="NotEquals" value="" error="RC cannot be empty." />
+          <CheckPoint field="Summary" isbacklogitem="false" operate="LengthLargerThan" value="20" error="Summary is too short, should more than 20 characters." />
+        </CheckPoints>
+        <Notification template="MailTemplate\Notification.cshtml" to="Detected By" subject="Please fill in more information for the defect which you filed">
+          <Field name="Detected By" orderby="ASC" />
+          <Field name="Id" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Detected on Date" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="32610CA1-032C-496D-A245-AF370FD6BBC6" type="Defect" description="Ask TL to handle Fixed Defect without DevTest owner" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="Fixed or 'Propose Close' or Deferred or Duplicate or Rejected" />
+            <Field field="DevTest Owner (Defect)" operate="Equals" value="" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="xin.li21@hp.com,pengw@hp.com" subject="Fixed defects without DevTest owner">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Defect Status" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="79103155-7B8D-4D96-A9BB-6C657ED29B7D" type="Defect" description="Ask DevTest owner to do bug verification ASAP." duration_mins="720">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="Fixed or 'Propose Close' or Deferred or Duplicate or Rejected" />
+            <Field field="DevTest Owner (Defect)" operate="NotEquals" value="" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="DevTest Owner (Defect)" cc="xin.li21@hp.com,pengw@hp.com" subject="Do you know you have defect which need to be verified ASAP?">
+          <Field name="DevTest Owner (Defect)" orderby="ASC" />
+          <Field name="Id" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Defect Status" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="71B24859-364A-438F-8DBF-4FD07C478056" type="Defect" description="Ask Dev Manager to fill in release field for new defects" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="New or Open" />
+            <Field field="Detected on Date" operate="LastDays" value="7" />
+          </ItemFields>
+          <BackLogFields>
+            <Field field="Application" operate="Equals" value="7 or 17" />
+            <Field field="Release" operate="Equals" value="" />
+          </BackLogFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="shlomi.nissim@hp.com;guy.rosenthal@hp.com" subject="Please fill in the Release field for new defects">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Detected By" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="F7FB9F8A-0C67-4473-850E-5B8AECC16ECA" type="Defect" description="Ask SEL DevTest to fill in Product Area field" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="New or Open" />
+            <Field field="Detected By" operate="Equals" value="xin.li21@hp.com or pengw@hp.com or mei-xia.sun@hp.com or wei.yuan@hp.com" />
+            <Field field="Product_Area" operate="Equals" value="" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="Detected By" subject="Please don't forget to fill in the Product Area">
+          <Field name="Detected By" orderby="ASC" />
+          <Field name="Id" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Application" isbacklogitem="true" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="5F1D9E73-DAF9-4DB6-8C29-03CB69443910" type="Defect" description="Notify DevTest TL which fixed defects without Product Area" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="Fixed or 'Propose Close' or Deferred or Duplicate or Rejected" />
+            <Field field="Product_Area" operate="Equals" value="" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="xin.li21@hp.com,pengw@hp.com" subject="The defects are without Product Area, please fill in:">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Defect Status" />
+          <Field name="Detected By" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="21926FFC-52E3-499D-AA06-94B0F1E4928C" type="Defect" description="Notify DevTest TL which defects not be fixed but RC" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Defect Status" operate="Equals" value="New or Open" />
+            <Field field="RC" operate="Equals" value="Yes" />
+          </ItemFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="xin.li21@hp.com,pengw@hp.com" subject="The following RC defects not be fixed yet">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=defect;entityId=%fieldvalue%" />
+          <Field name="Summary" />
+          <Field name="Application" isbacklogitem="true" />
+          <Field name="Release" isbacklogitem="true" />
+          <Field name="Detected By" />
+          <Field name="Detected on Date" />
+          <Field name="Assigned To" />
+        </Notification>
+      </Item>
+      <!-- User story related monitor items -->
+      <Item enabled="false" updated="false" id="B994F37A-E692-47BC-9741-410E28C2E7B9" type="Requirement" description="Ask QA TL to assign DevTest owner for In Testing user stories" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Name" operate="NotContain" value="[Tech]" />
+            <Field field="DevTest Owner (US)" operate="Equals" value="" />
+          </ItemFields>
+          <BackLogFields>
+            <Field field="entity-sub-type" operate="Equals" value="70" />
+            <Field field="Status" operate="Equals" value="'In Testing'" />
+          </BackLogFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="xin.li21@hp.com,pengw@hp.com" subject="Please assign DevTest owner for the following user stories">
+          <Field name="Id" orderby="DESC" href="#product/backlog_items/shared.update;entityTypeName=requirement;entityId=%fieldvalue%" />
+          <Field name="Name" />
+          <Field name="Assigned To" isbacklogitem="true" />
+          <Field name="Application" isbacklogitem="true" />
+          <Field name="Release" isbacklogitem="true" />
+        </Notification>
+      </Item>
+      <Item enabled="false" updated="false" id="CF7D083C-4BD1-4678-A90C-B9BB59F161D6" type="Requirement" description="Notify Dev to improve the user story title or content" duration_mins="720">
+        <Condition>
+          <ItemFields>
+            <Field field="Name" operate="NotContain" value="[Tech]" />
+          </ItemFields>
+          <BackLogFields>
+            <Field field="Status" operate="Equals" value="'In Testing'" />
+          </BackLogFields>
+        </Condition>
+        <CheckPoints>
+          <CheckPoint field="Description" operate="NotEquals" value="" error="Did you forget the Description Field?" istext="true" />
+          <CheckPoint field="Description" operate="LengthLargerThan" value="20" error="It is better if you can fill in more information in Description field." istext="true" />
+        </CheckPoints>
+        <Notification template="MailTemplate\Notification.cshtml" to="Assigned To" subject="Please improve the description of user stories which you owned">
+          <Field name="Assigned To" isbacklogitem="true" orderby="ASC" />
+          <Field name="Id" href="#product/backlog_items/shared.update;entityTypeName=requirement;entityId=%fieldvalue%" />
+          <Field name="Name" />
+          <Field name="Modified" />
+        </Notification>
+      </Item>
+      <Item enabled="true" updated="false" id="FE78FA6F-8432-4957-9C0B-EBAC9B9D28E0" type="Requirement" description="Notify DevTest owner to finish the user story" duration_mins="1440">
+        <Condition>
+          <ItemFields>
+            <Field field="Name" operate="NotContain" value="[Tech]" />
+            <Field field="DevTest Owner (US)" operate="NotEquals" value="" />
+          </ItemFields>
+          <BackLogFields>
+            <Field field="entity-sub-type" operate="Equals" value="70" />
+            <Field field="Status" operate="Equals" value="'In Testing'" />
+          </BackLogFields>
+        </Condition>
+        <Notification template="MailTemplate\Notification.cshtml" to="DevTest Owner (US)" subject="Do you know that you have user stories which are in testing?">
+          <Field name="DevTest Owner (US)" orderby="ASC" />
+          <Field name="Id" href="#product/backlog_items/shared.update;entityTypeName=requirement;entityId=%fieldvalue%" />
+          <Field name="Name" />
+          <Field name="Application" isbacklogitem="true" />
+          <Field name="Release" isbacklogitem="true" />
+        </Notification>
+      </Item>
+    </Items>
+  </Monitor>
+</AGMMonitorService>

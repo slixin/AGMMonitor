@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGMMonitorLib", "AGMMonitorLib\AGMMonitorLib.csproj", "{0D452DE8-1AE5-400B-BEC7-845DC471A06D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGMMonitor", "AGMMonitor\AGMMonitor.csproj", "{8A5C7E4B-5837-474E-8A29-B7A50E998265}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWDEncryptor", "PWDEncryptor\PWDEncryptor.csproj", "{3A3D70F4-4A6E-46B4-9DDA-C3AF4A703D75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8792D79-C345-4657-AC27-D7A2CBE832E6}"
+	ProjectSection(SolutionItems) = preProject
+		Configuration\Storm.xml = Configuration\Storm.xml
+		Configuration\TruClient.xml = Configuration\TruClient.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D452DE8-1AE5-400B-BEC7-845DC471A06D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D452DE8-1AE5-400B-BEC7-845DC471A06D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D452DE8-1AE5-400B-BEC7-845DC471A06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D452DE8-1AE5-400B-BEC7-845DC471A06D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5C7E4B-5837-474E-8A29-B7A50E998265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5C7E4B-5837-474E-8A29-B7A50E998265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5C7E4B-5837-474E-8A29-B7A50E998265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5C7E4B-5837-474E-8A29-B7A50E998265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A3D70F4-4A6E-46B4-9DDA-C3AF4A703D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A3D70F4-4A6E-46B4-9DDA-C3AF4A703D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A3D70F4-4A6E-46B4-9DDA-C3AF4A703D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A3D70F4-4A6E-46B4-9DDA-C3AF4A703D75}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
